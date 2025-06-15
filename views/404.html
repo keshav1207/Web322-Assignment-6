@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Climate Solutions</title>
+    <link rel="stylesheet" href="/css/main.css" />
+  </head>
+  <body>
+    <div class="navbar bg-base-100 shadow-sm">
+      <div class="navbar-start">
+        <div class="dropdown">
+          <button tabindex="0" class="btn btn-ghost lg:hidden">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h8m-8 6h16"
+              />
+            </svg>
+          </button>
+          <ul
+            tabindex="0"
+            class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+          >
+            <li><a href="/about">About</a></li>
+            <li>
+              <details>
+                <summary>Sector</summary>
+                <ul class="p-2">
+                  <li>
+                    <a href="/solutions/projects?sector=Land Sinks"
+                      >Land Sinks</a
+                    >
+                  </li>
+                  <li>
+                    <a href="/solutions/projects?sector=Industry">Industry</a>
+                  </li>
+                  <li>
+                    <a href="/solutions/projects?sector=Electricity"
+                      >Electricity</a
+                    >
+                  </li>
+                </ul>
+              </details>
+            </li>
+          </ul>
+        </div>
+
+        <a href="/" class="btn btn-ghost text-xl">Climate Solutions</a>
+      </div>
+
+      <div class="navbar-end hidden lg:flex">
+        <ul class="menu menu-horizontal px-1">
+          <li><a href="/about">About</a></li>
+          <li>
+            <details>
+              <summary>Sector</summary>
+              <ul class="p-2 bg-base-100 z-50">
+                <li>
+                  <a href="/solutions/projects?sector=Land Sinks">Land Sinks</a>
+                </li>
+                <li>
+                  <a href="/solutions/projects?sector=Industry">Industry</a>
+                </li>
+                <li>
+                  <a href="/solutions/projects?sector=Electricity"
+                    >Electricity</a
+                  >
+                </li>
+              </ul>
+            </details>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="hero min-h-screen bg-base-200">
+      <div class="hero-content text-center">
+        <div class="max-w-md">
+          <h1 class="text-5xl font-bold text-error">404</h1>
+          <p class="py-6">This page doesn't exist!!</p>
+          <a href="/" class="btn btn-primary">Back to Home</a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

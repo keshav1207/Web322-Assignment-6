@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Climate Solutions</title>
+    <link rel="stylesheet" href="/css/main.css" />
+  </head>
+  <body>
+    <div class="navbar bg-base-100 shadow-sm">
+      <!-- Left (brand + mobile dropdown) -->
+      <div class="navbar-start">
+        <!-- Mobile dropdown menu -->
+        <div class="dropdown">
+          <button tabindex="0" class="btn btn-ghost lg:hidden">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h8m-8 6h16"
+              />
+            </svg>
+          </button>
+          <ul
+            tabindex="0"
+            class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+          >
+            <li><a href="/about">About</a></li>
+            <li>
+              <details>
+                <summary>Sector</summary>
+                <ul class="p-2">
+                  <li>
+                    <a href="/solutions/projects?sector=Land Sinks"
+                      >Land Sinks</a
+                    >
+                  </li>
+                  <li>
+                    <a href="/solutions/projects?sector=Industry">Industry</a>
+                  </li>
+                  <li><a href="/solutions/projects?sector=Electricity">Electricity</a></li>
+                </ul>
+              </details>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Logo/Brand -->
+        <a href="/" class="btn btn-ghost text-xl">Climate Solutions</a>
+      </div>
+
+      <!-- Right (About + Sector for desktop) -->
+      <div class="navbar-end hidden lg:flex">
+        <ul class="menu menu-horizontal px-1">
+          <li><a href="/about">About</a></li>
+          <li>
+            <details>
+              <summary>Sector</summary>
+              <ul class="p-2 bg-base-100 z-50">
+                <li>
+                  <a href="/solutions/projects?sector=Land Sinks"
+                    >Land Sinks</a
+                  >
+                </li>
+                <li><a href="/solutions/projects?sector=Industry">Industry</a></li>
+                <li><a href="/solutions/projects?sector=Electricity">Electricity</a></li>
+              </ul>
+            </details>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="container mx-auto px-3 py-7">
+                 
+      <div class="hero bg-base-200 py-10 mb-12 rounded-lg">
+        <div class="hero-content text-center">
+          <div class="max-w-md">
+            <h1 class="text-5xl font-bold">Hello there</h1>
+            <p class="py-6">
+              Check out these wonderful projects aiming to help our environment!
+            </p>
+            <a href="/solutions/projects" class="btn btn-primary">
+            See projects!
+            </a>
+          </div>
+        </div>
+      </div>
+
+   
+  <div class="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+   
+    <div class="card bg-base-100 shadow-xl">
+      <figure>
+        <img src="https://drawdown.org/sites/default/files/solutions/solution_farmlandrestoration01.jpg" alt="Project 1" />
+      </figure>
+      <div class="card-body">
+        <h2 class="card-title">Abandoned Farmland Restoration</h2>
+        <p>Restoration can bring degraded farmland back into productivity and sequester carbon in the process.</p>
+        <div class="card-actions justify-end">
+          <a href="/solutions/projects/1" class="btn btn-outline btn-primary">More Info</a>
+        </div>
+      </div>
+    </div>
+
+   
+    <div class="card bg-base-100 shadow-xl">
+      <figure>
+        <img src="https://drawdown.org/sites/default/files/solutions/airplanes-web.jpg" alt="Project 13" />
+      </figure>
+      <div class="card-body">
+        <h2 class="card-title">Efficient Aviation</h2>
+        <p>Technologies and practices that can lower airplane emissions include better engines, wingtips, and reducing airplanes’ weight.</p>
+        <div class="card-actions justify-end">
+          <a href="/solutions/projects/13" class="btn btn-outline btn-primary">More Info</a>
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="card bg-base-100 shadow-xl">
+      <figure>
+        <img src="https://drawdown.org/sites/default/files/solutions/solution_perennialbiomass01.jpg" alt="Project 26" />
+      </figure>
+      <div class="card-body">
+        <h2 class="card-title">Perennial Biomass Production</h2>
+        <p>Bioenergy relies on biomass—often annual crops such as corn. Perennial plants (e.g., switchgrass, silvergrass, willow, eucalyptus) are a more sustainable source and sequester modest amounts of soil carbon.</p>
+        <div class="card-actions justify-end">
+          <a href="/solutions/projects/26" class="btn btn-outline btn-primary"> More Info</a>
+        </div>
+      </div>
+    </div>
+
+    </div>
+  </body>
+</html>
