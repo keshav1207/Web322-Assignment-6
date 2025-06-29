@@ -1,5 +1,5 @@
 {
-  "name": "assignment2",
+  "name": "assignment4",
   "version": "1.0.0",
   "description": "",
   "license": "ISC",
@@ -15,6 +15,7 @@
   "dependencies": {
     "@tailwindcss/typography": "^0.5.16",
     "daisyui": "^4.12.24",
+    "ejs": "^3.1.10",
     "express": "^5.1.0"
   },
   "devDependencies": {

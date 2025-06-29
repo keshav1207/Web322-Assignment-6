@@ -1,11 +1,11 @@
 /*********************************************************************************
- *  WEB322 – Assignment 3
+ *  WEB322 – Assignment 4
  *  I declare that this assignment is my own work in accordance with Seneca Academic Policy.
  *  No part of this assignment has been copied manually or electronically from any other source
  *  (including web sites) or distributed to other students.
  *
- *  Name: Keshav Callychurn Student ID: 108568247 Date: 14/06/2025
- * Published URL:
+ *  Name: Keshav Callychurn Student ID: 108568247 Date: 29/06/2025
+ * Published URL: https://web322-assignment-3-ten.vercel.app/
  ********************************************************************************/
 const express = require("express");
 const projectData = require("./modules/projects");
@@ -14,16 +14,16 @@ const app = express();
 
 const PORT = 3000;
 
-app.use(express.static(__dirname + "/public"));
+app.use(express.static(path.join(__dirname, "public")));
 
-app.use(express.static("public"));
+app.set("view engine", "ejs");
 
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "views/home.html"));
+  res.render("home", { page: "/" });
 });
 
 app.get("/about", (req, res) => {
-  res.sendFile(path.join(__dirname, "views/about.html"));
+  res.render("about", { page: "/about" });
 });
 
 app.get("/solutions/projects", (req, res) => {
@@ -32,13 +32,27 @@ app.get("/solutions/projects", (req, res) => {
   if (sector) {
     projectData
       .getProjectsBySector(sector)
-      .then((projects) => res.json(projects))
-      .catch((err) => res.status(404).send(err));
+      .then((projects) =>
+        res.render("projects", { projects, page: "/solutions/projects" })
+      )
+      .catch(() =>
+        res.status(404).render("404", {
+          message: `No projects found for sector: ${sector}`,
+          page: "/solutions/projects",
+        })
+      );
   } else {
     projectData
       .getAllProjects()
-      .then((projects) => res.json(projects))
-      .catch((err) => res.status(404).send(err));
+      .then((projects) =>
+        res.render("projects", { projects, page: "/solutions/projects" })
+      )
+      .catch(() =>
+        res.status(404).render("404", {
+          message: "Unable to load projects.",
+          page: "/solutions/projects",
+        })
+      );
   }
 });
 
@@ -47,12 +61,22 @@ app.get("/solutions/projects/:id", (req, res) => {
 
   projectData
     .getProjectById(projectId)
-    .then((project) => res.json(project))
-    .catch((err) => res.status(404).send(err));
+    .then((project) =>
+      res.render("project", { project, page: "/solutions/projects" })
+    )
+    .catch(() =>
+      res.status(404).render("404", {
+        message: `No project found with ID: ${req.params.id}`,
+        page: "/solutions/projects",
+      })
+    );
 });
 
 app.use((req, res) => {
-  res.status(404).sendFile(path.join(__dirname, "views/404.html"));
+  res.status(404).render("404", {
+    message: "Sorry, the page you're looking for doesn't exist.",
+    page: "",
+  });
 });
 
 projectData
