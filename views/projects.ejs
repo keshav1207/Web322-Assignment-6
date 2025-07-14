@@ -67,9 +67,9 @@
               <td>
                 <a
                   class="btn btn-xs btn-outline"
-                  href="/solutions/projects?sector=<%= encodeURIComponent(project.sector) %>"
+                  href="/solutions/projects?sector=<%= encodeURIComponent(project.Sector.sector_name) %>"
                 >
-                  <%= project.sector %>
+                  <%= project.Sector.sector_name %>
                 </a>
               </td>
               <td><%= project.summary_short %></td>
