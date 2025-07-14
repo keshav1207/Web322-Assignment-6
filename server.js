@@ -19,6 +19,8 @@ app.use(express.static(path.join(__dirname, "public")));
 app.set("view engine", "ejs");
 app.set("views", __dirname + "/views");
 
+app.use(express.urlencoded({ extended: true }));
+
 app.get("/", (req, res) => {
   res.render("home", { page: "/" });
 });
@@ -71,6 +73,31 @@ app.get("/solutions/projects/:id", (req, res) => {
         page: "/solutions/projects",
       })
     );
+});
+
+app.get("/solutions/addProject", (req, res) => {
+  projectData
+    .getAllSectors()
+    .then((sectorData) => {
+      res.render("addProject", {
+        sectors: sectorData,
+        page: "/solutions/addProject",
+      });
+    })
+    .catch((err) => {
+      res.render("500", { message: `Error loading sectors: ${err}` });
+    });
+});
+
+app.post("/solutions/addProject", (req, res) => {
+  projectData
+    .addProject(req.body)
+    .then(() => res.redirect("/solutions/projects"))
+    .catch((err) => {
+      res.render("500", {
+        message: `I'm sorry, but we have encountered the following error: ${err}`,
+      });
+    });
 });
 
 app.use((req, res) => {

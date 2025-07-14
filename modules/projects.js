@@ -99,9 +99,33 @@ function getProjectsBySector(sector) {
   });
 }
 
+function addProject(projectData) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      await Project.create(projectData);
+      resolve();
+    } catch (err) {
+      reject(err.errors[0].message);
+    }
+  });
+}
+
+function getAllSectors() {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const sectors = await Sector.findAll();
+      resolve(sectors);
+    } catch (err) {
+      reject("Unable to retrieve sectors");
+    }
+  });
+}
+
 module.exports = {
   initialize,
   getAllProjects,
   getProjectById,
   getProjectsBySector,
+  addProject,
+  getAllSectors,
 };
