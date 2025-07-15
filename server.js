@@ -100,6 +100,37 @@ app.post("/solutions/addProject", (req, res) => {
     });
 });
 
+app.get("/solutions/editProject/:id", (req, res) => {
+  const projectId = req.params.id;
+
+  Promise.all([
+    projectData.getProjectById(projectId),
+    projectData.getAllSectors(),
+  ])
+    .then(([project, sectors]) => {
+      res.render("editProject", { project, sectors });
+    })
+    .catch((err) => {
+      res.status(404).render("404", {
+        message: `Error loading project or sectors: ${err}`,
+        page: "",
+      });
+    });
+});
+
+app.post("/solutions/editProject", (req, res) => {
+  const id = req.body.id;
+
+  projectData
+    .editProject(id, req.body)
+    .then(() => res.redirect("/solutions/projects"))
+    .catch((err) => {
+      res.render("500", {
+        message: `I'm sorry, but we have encountered the following error: ${err}`,
+      });
+    });
+});
+
 app.use((req, res) => {
   res.status(404).render("404", {
     message: "Sorry, the page you're looking for doesn't exist.",

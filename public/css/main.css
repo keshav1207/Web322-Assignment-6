@@ -2372,6 +2372,11 @@ html {
   background-color: rgb(229 231 235 / var(--tw-bg-opacity, 1));
 }
 
+.bg-green-600 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(22 163 74 / var(--tw-bg-opacity, 1));
+}
+
 .p-2 {
   padding: 0.5rem;
 }
@@ -2490,6 +2495,11 @@ html {
   color: rgb(31 41 55 / var(--tw-text-opacity, 1));
 }
 
+.text-white {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity, 1));
+}
+
 .underline {
   text-decoration-line: underline;
 }
@@ -2521,6 +2531,11 @@ html {
 .hover\:bg-gray-300:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(209 213 219 / var(--tw-bg-opacity, 1));
+}
+
+.hover\:bg-green-700:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(21 128 61 / var(--tw-bg-opacity, 1));
 }
 
 @media (min-width: 640px) {

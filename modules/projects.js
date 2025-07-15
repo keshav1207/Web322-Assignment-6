@@ -121,6 +121,24 @@ function getAllSectors() {
   });
 }
 
+function editProject(id, projectData) {
+  return new Promise((resolve, reject) => {
+    Project.update(projectData, {
+      where: { id },
+    })
+      .then(([updatedRows]) => {
+        if (updatedRows === 0) {
+          reject("No project found to update.");
+        } else {
+          resolve();
+        }
+      })
+      .catch((err) => {
+        reject(err.errors?.[0]?.message || err.message);
+      });
+  });
+}
+
 module.exports = {
   initialize,
   getAllProjects,
@@ -128,4 +146,5 @@ module.exports = {
   getProjectsBySector,
   addProject,
   getAllSectors,
+  editProject,
 };
