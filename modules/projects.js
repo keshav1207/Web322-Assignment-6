@@ -139,6 +139,22 @@ function editProject(id, projectData) {
   });
 }
 
+function deleteProject(id) {
+  return new Promise((resolve, reject) => {
+    Project.destroy({ where: { id } })
+      .then((deletedCount) => {
+        if (deletedCount === 0) {
+          reject("Project not found");
+        } else {
+          resolve();
+        }
+      })
+      .catch((err) => {
+        reject(err.errors ? err.errors[0].message : err.message);
+      });
+  });
+}
+
 module.exports = {
   initialize,
   getAllProjects,
@@ -147,4 +163,5 @@ module.exports = {
   addProject,
   getAllSectors,
   editProject,
+  deleteProject,
 };

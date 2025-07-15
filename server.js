@@ -131,6 +131,21 @@ app.post("/solutions/editProject", (req, res) => {
     });
 });
 
+app.get("/solutions/deleteProject/:id", (req, res) => {
+  const projectId = parseInt(req.params.id);
+
+  projectData
+    .deleteProject(projectId)
+    .then(() => {
+      res.redirect("/solutions/projects");
+    })
+    .catch((err) => {
+      res.render("500", {
+        message: `I'm sorry, but we have encountered the following error: ${err}`,
+      });
+    });
+});
+
 app.use((req, res) => {
   res.status(404).render("404", {
     message: "Sorry, the page you're looking for doesn't exist.",
