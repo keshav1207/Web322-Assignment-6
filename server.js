@@ -156,6 +156,7 @@ app.use((req, res) => {
 
 projectData
   .initialize()
+  .then(authData.initialize)
   .then(() => {
     console.log("Project data initialized successfully.");
     app.listen(PORT, () => console.log("Server is running on port " + PORT));
