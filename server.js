@@ -12,8 +12,17 @@ const projectData = require("./modules/projects");
 const path = require("path");
 const app = express();
 const authData = require("./modules/auth-service");
+const clientSessions = require("client-sessions");
 
 const PORT = 3000;
+
+function ensureLogin(req, res, next) {
+  if (!req.session.user) {
+    res.redirect("/login");
+  } else {
+    next();
+  }
+}
 
 app.use(express.static(path.join(__dirname, "public")));
 
@@ -21,6 +30,20 @@ app.set("view engine", "ejs");
 app.set("views", __dirname + "/views");
 
 app.use(express.urlencoded({ extended: true }));
+
+app.use(
+  clientSessions({
+    cookieName: "session", // this is the object name that will be added to 'req'
+    secret: "o6LjQ5EVNC28ZgK64hDELM18ScpFQr", // this should be a long un-guessable string.
+    duration: 2 * 60 * 1000, // duration of the session in milliseconds (2 minutes)
+    activeDuration: 1000 * 60, // the session will be extended by this many ms each request (1 minute)
+  })
+);
+
+app.use((req, res, next) => {
+  res.locals.session = req.session;
+  next();
+});
 
 app.get("/", (req, res) => {
   res.render("home", { page: "/" });
@@ -76,7 +99,7 @@ app.get("/solutions/projects/:id", (req, res) => {
     );
 });
 
-app.get("/solutions/addProject", (req, res) => {
+app.get("/solutions/addProject", ensureLogin, (req, res) => {
   projectData
     .getAllSectors()
     .then((sectorData) => {
@@ -90,7 +113,7 @@ app.get("/solutions/addProject", (req, res) => {
     });
 });
 
-app.post("/solutions/addProject", (req, res) => {
+app.post("/solutions/addProject", ensureLogin, (req, res) => {
   projectData
     .addProject(req.body)
     .then(() => res.redirect("/solutions/projects"))
@@ -101,7 +124,7 @@ app.post("/solutions/addProject", (req, res) => {
     });
 });
 
-app.get("/solutions/editProject/:id", (req, res) => {
+app.get("/solutions/editProject/:id", ensureLogin, (req, res) => {
   const projectId = req.params.id;
 
   Promise.all([
@@ -119,7 +142,7 @@ app.get("/solutions/editProject/:id", (req, res) => {
     });
 });
 
-app.post("/solutions/editProject", (req, res) => {
+app.post("/solutions/editProject", ensureLogin, (req, res) => {
   const id = req.body.id;
 
   projectData
@@ -132,7 +155,7 @@ app.post("/solutions/editProject", (req, res) => {
     });
 });
 
-app.get("/solutions/deleteProject/:id", (req, res) => {
+app.get("/solutions/deleteProject/:id", ensureLogin, (req, res) => {
   const projectId = parseInt(req.params.id);
 
   projectData
