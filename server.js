@@ -170,6 +170,70 @@ app.get("/solutions/deleteProject/:id", ensureLogin, (req, res) => {
     });
 });
 
+app.get("/login", (req, res) => {
+  res.render("login", {
+    errorMessage: "",
+    userName: "",
+  });
+});
+
+app.get("/register", (req, res) => {
+  res.render("register", {
+    errorMessage: "",
+    successMessage: "",
+    userName: "",
+  });
+});
+
+app.post("/register", (req, res) => {
+  authData
+    .registerUser(req.body)
+    .then(() => {
+      res.render("register", {
+        successMessage: "User created",
+        errorMessage: "",
+        userName: "",
+      });
+    })
+    .catch((err) => {
+      res.render("register", {
+        successMessage: "",
+        errorMessage: err,
+        userName: req.body.userName,
+      });
+    });
+});
+
+app.post("/login", (req, res) => {
+  req.body.userAgent = req.get("User-Agent");
+
+  authData
+    .checkUser(req.body)
+    .then((user) => {
+      req.session.user = {
+        userName: user.userName,
+        email: user.email,
+        loginHistory: user.loginHistory,
+      };
+      res.redirect("/solutions/projects");
+    })
+    .catch((err) => {
+      res.render("login", {
+        errorMessage: err,
+        userName: req.body.userName,
+      });
+    });
+});
+
+app.get("/logout", (req, res) => {
+  req.session.reset();
+  res.redirect("/");
+});
+
+app.get("/userHistory", ensureLogin, (req, res) => {
+  res.render("userHistory");
+});
+
 app.use((req, res) => {
   res.status(404).render("404", {
     message: "Sorry, the page you're looking for doesn't exist.",
