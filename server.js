@@ -33,10 +33,10 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(
   clientSessions({
-    cookieName: "session", // this is the object name that will be added to 'req'
-    secret: "o6LjQ5EVNC28ZgK64hDELM18ScpFQr", // this should be a long un-guessable string.
-    duration: 2 * 60 * 1000, // duration of the session in milliseconds (2 minutes)
-    activeDuration: 1000 * 60, // the session will be extended by this many ms each request (1 minute)
+    cookieName: "session",
+    secret: "o6LjQ5EVNC28ZgK64hDELM18ScpFQr",
+    duration: 2 * 60 * 1000,
+    activeDuration: 1000 * 60,
   })
 );
 
@@ -174,6 +174,7 @@ app.get("/login", (req, res) => {
   res.render("login", {
     errorMessage: "",
     userName: "",
+    page: "/login",
   });
 });
 
@@ -182,6 +183,7 @@ app.get("/register", (req, res) => {
     errorMessage: "",
     successMessage: "",
     userName: "",
+    page: "/register",
   });
 });
 
@@ -231,7 +233,7 @@ app.get("/logout", (req, res) => {
 });
 
 app.get("/userHistory", ensureLogin, (req, res) => {
-  res.render("userHistory");
+  res.render("userHistory", { page: "/userHistory" });
 });
 
 app.use((req, res) => {

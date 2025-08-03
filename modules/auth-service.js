@@ -2,6 +2,7 @@
 
 const mongoose = require("mongoose");
 require("dotenv").config();
+const bcrypt = require("bcryptjs");
 
 let Schema = mongoose.Schema;
 let User; // to be defined after db connection
@@ -46,22 +47,29 @@ function registerUser(userData) {
       return;
     }
 
-    let newUser = new User({
-      userName: userData.userName,
-      password: userData.password,
-      email: userData.email,
-      loginHistory: [],
-    });
+    bcrypt
+      .hash(userData.password, 10)
+      .then((hash) => {
+        let newUser = new User({
+          userName: userData.userName,
+          password: hash,
+          email: userData.email,
+          loginHistory: [],
+        });
 
-    newUser
-      .save()
-      .then(() => resolve())
-      .catch((err) => {
-        if (err.code === 11000) {
-          reject("User Name already taken");
-        } else {
-          reject("There was an error creating the user: " + err);
-        }
+        newUser
+          .save()
+          .then(() => resolve())
+          .catch((err) => {
+            if (err.code === 11000) {
+              reject("User Name already taken");
+            } else {
+              reject("There was an error creating the user: " + err);
+            }
+          });
+      })
+      .catch(() => {
+        reject("There was an error encrypting the password");
       });
   });
 }
@@ -76,28 +84,37 @@ function checkUser(userData) {
           return;
         }
 
-        if (users[0].password !== userData.password) {
-          reject(`Incorrect Password for user: ${userData.userName}`);
-          return;
-        }
+        let user = users[0];
 
-        // Update login history
-        if (users[0].loginHistory.length === 8) {
-          users[0].loginHistory.pop();
-        }
+        bcrypt
+          .compare(userData.password, user.password)
+          .then((result) => {
+            if (!result) {
+              reject(`Incorrect Password for user: ${userData.userName}`);
+              return;
+            }
 
-        users[0].loginHistory.unshift({
-          dateTime: new Date().toString(),
-          userAgent: userData.userAgent,
-        });
+            // Update login history
+            if (user.loginHistory.length === 8) {
+              user.loginHistory.pop();
+            }
 
-        User.updateOne(
-          { userName: users[0].userName },
-          { $set: { loginHistory: users[0].loginHistory } }
-        )
-          .then(() => resolve(users[0]))
-          .catch((err) => {
-            reject("There was an error verifying the user: " + err);
+            user.loginHistory.unshift({
+              dateTime: new Date(),
+              userAgent: userData.userAgent,
+            });
+
+            User.updateOne(
+              { userName: user.userName },
+              { $set: { loginHistory: user.loginHistory } }
+            )
+              .then(() => resolve(user))
+              .catch((err) => {
+                reject("There was an error verifying the user: " + err);
+              });
+          })
+          .catch(() => {
+            reject("Error comparing passwords");
           });
       })
       .catch((err) => {

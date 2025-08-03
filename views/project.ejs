@@ -60,12 +60,14 @@
               &larr; Go Back
             </a>
 
+            <% if (session.user) { %>
             <a
               href="/solutions/editProject/<%= project.id %>"
               class="inline-block px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
             >
               ✏️ Edit Project
             </a>
+            <% } %>
           </div>
         </div>
       </div>
